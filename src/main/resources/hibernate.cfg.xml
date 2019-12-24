@@ -24,12 +24,12 @@
 
     <!-- Set "true" to show SQL statements -->
     <property name="hibernate.show_sql">true</property>
-    <property name="hbm2ddl.auto">create</property>
+    <property name="hbm2ddl.auto">update</property>
     <property name="show_sql">true</property>
 
     <!-- mapping class using annotation -->
-    <mapping class="unittest.Ship"></mapping>
-    <mapping class="unittest.Category"></mapping>
-    <mapping class="unittest.Owner"></mapping>
+    <mapping class="fleet.fleet.models.Ship"></mapping>
+    <mapping class="fleet.fleet.models.Category"></mapping>
+    <mapping class="fleet.fleet.models.Owner"></mapping>
   </session-factory>
 </hibernate-configuration>

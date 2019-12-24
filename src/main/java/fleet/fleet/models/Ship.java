@@ -1,7 +1,8 @@
-package unittest;
+package fleet.fleet.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class Ship {
     @JoinTable(name = "ShipOwner",
             joinColumns ={ @JoinColumn(name ="shipId", updatable = true,insertable = true)},
             inverseJoinColumns = {@JoinColumn(name = "mOwnerId", updatable = true,insertable = true)})
-    private List<Owner> mOwnerList = new ArrayList<>();
+    private Set<Owner> mOwnerList = new HashSet<>();
 
     public Ship(){
 
@@ -53,15 +54,15 @@ public class Ship {
         return mLmoNumber;
     }
 
-    public void setLmoNumber(int mLmoNumber) {
+    public void setLmoNumber(long mLmoNumber) {
         this.mLmoNumber = mLmoNumber;
     }
 
-    public List<Owner> getOwnerList() {
+    public Set<Owner> getOwnerList() {
         return mOwnerList;
     }
 
-    public void setOwnerList(List<Owner> mOwnerList) {
+    public void setOwnerList(Set<Owner> mOwnerList) {
         this.mOwnerList = mOwnerList;
     }
 

@@ -28,8 +28,8 @@
     <property name="show_sql">true</property>
 
     <!-- mapping class using annotation -->
-    <mapping class="unittest.Ship"></mapping>
-    <mapping class="unittest.Category"></mapping>
-    <mapping class="unittest.Owner"></mapping>
+    <mapping class="fleet.fleet.models.Ship"></mapping>
+    <mapping class="fleet.fleet.models.Category"></mapping>
+    <mapping class="fleet.fleet.models.Owner"></mapping>
   </session-factory>
 </hibernate-configuration>

@@ -1,9 +1,8 @@
-package unittest;
+package fleet.fleet.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table
@@ -11,11 +10,11 @@ public class Owner {
 
     @Id
     @Column(name = "mOwnerId")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue
     private int mOwnerId;
     @Column
     private String mOwnerName;
-    @ManyToMany(mappedBy = "mOwnerList",fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "mOwnerList",cascade = { CascadeType.ALL })
     private List<Ship> mListShip = new ArrayList<>();
 
     public Owner(){

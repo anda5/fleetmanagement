@@ -1,4 +1,4 @@
-package unittest;
+package fleet.fleet.models;
 
 import javax.persistence.*;
 

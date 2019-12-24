@@ -1,8 +1,8 @@
 package fleet.fleet;
 
-import unittest.Category;
-import unittest.Owner;
-import unittest.Ship;
+import fleet.fleet.models.Category;
+import fleet.fleet.models.Owner;
+import fleet.fleet.models.Ship;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -52,15 +52,15 @@ public class DBTest {
         for (int i = 0; i < getOwnersList().size(); i++) {
             Owner owner = getOwnersList().get(i);
             owner.getListShip().addAll(getShips());
-            session.saveOrUpdate(owner);
+            session.save(owner);
         }
         for (int i = 0; i < getShips().size(); i++) {
             Ship ship = getShips().get(i);
             ship.getOwnerList().addAll(getOwnersList());
             Category category = getCategories().get(i);
             category.setShip(ship);
-            session.saveOrUpdate(ship);
-            session.saveOrUpdate(category);
+            session.save(ship);
+            session.save(category);
         }
     }
 
