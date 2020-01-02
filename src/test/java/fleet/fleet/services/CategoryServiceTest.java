@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.models.Ship;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class CategoryServiceTest {
     private CategoryService mCategoryService;
 
     @Test
-    void create() {
+    void create() throws ResourceNotFound {
 
         Category category = new Category();
         category.setmShipType("Cruise");
@@ -29,7 +30,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void update() {
+    void update() throws ResourceNotFound {
         Category category = new Category();
         category.setmShipType("Cruise");
         category.setmShipTonnage(208081);
@@ -45,7 +46,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws ResourceNotFound {
 
         Category category = new Category();
         category.setmShipType("Cruise");
@@ -70,7 +71,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void getObjBy() {
+    void getObjBy() throws ResourceNotFound {
 
         Category category = new Category();
         category.setmShipType("Cruise");

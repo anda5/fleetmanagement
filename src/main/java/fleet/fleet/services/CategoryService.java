@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,11 @@ public class CategoryService extends CRUDService {
     @Override
     public Category create(Object obj) {
         Category category = (Category) obj;
-        if (obj != null) {
-           return mCategRepository.save(category);
-        }
-        return null;
+        return mCategRepository.save(category);
     }
 
     @Override
-    public Category update(Object object) {
+    public Category update(Object object) throws ResourceNotFound {
         Category category = (Category) object;
         Optional<Category> optionalCategory = mCategRepository.findById(category.getmCategoryId());
         if (optionalCategory.isPresent()) {
@@ -36,16 +34,19 @@ public class CategoryService extends CRUDService {
             existentCategory.setmShipType(category.getmShipType());
             existentCategory.setShip(category.getShip());
 
-           return mCategRepository.save(existentCategory);
+            return mCategRepository.save(existentCategory);
+        } else {
+            throw new ResourceNotFound("Category not found for this id : " + category.getmCategoryId());
         }
-       return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws ResourceNotFound {
         Optional<Category> category = mCategRepository.findById(id);
         if (category.isPresent()) {
             mCategRepository.delete(category.get());
+        } else {
+            throw new ResourceNotFound("Categroy not found for this id :" + id);
         }
     }
 
@@ -57,11 +58,12 @@ public class CategoryService extends CRUDService {
     }
 
     @Override
-    public Category getObjBy(int id) {
+    public Category getObjBy(int id) throws ResourceNotFound {
         Optional<Category> category = mCategRepository.findById(id);
         if (category.isPresent()) {
             return category.get();
+        } else {
+            throw new ResourceNotFound("Category not found for this id : " + id);
         }
-        return null;
     }
 }

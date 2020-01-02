@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Owner;
 import fleet.fleet.models.Ship;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class OwnerServiceTest {
     private OwnerService mOwnerService;
 
     @Test
-    void create() {
+    void create() throws ResourceNotFound {
         Owner owner = new Owner();
         owner.setOwnerName("Anda");
         mOwnerService.create(owner);
@@ -27,7 +28,7 @@ class OwnerServiceTest {
     }
 
     @Test
-    void update() {
+    void update() throws ResourceNotFound {
         Owner owner = new Owner();
         owner.setOwnerName("Anda");
         mOwnerService.create(owner);
@@ -43,7 +44,7 @@ class OwnerServiceTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws ResourceNotFound {
         Owner owner = new Owner();
         owner.setOwnerName("Anda");
         mOwnerService.create(owner);
@@ -64,7 +65,7 @@ class OwnerServiceTest {
     }
 
     @Test
-    void getObjBy() {
+    void getObjBy() throws ResourceNotFound {
         Owner owner = new Owner();
         owner.setOwnerName("Anda");
         mOwnerService.create(owner);

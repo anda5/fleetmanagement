@@ -1,9 +1,11 @@
 package fleet.fleet.controller;
 
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.models.Ship;
 import fleet.fleet.services.CategoryService;
+import fleet.fleet.services.OwnerService;
 import fleet.fleet.services.ShipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +25,7 @@ public class ApiController {
     @Autowired
     private CategoryService mCategService;
     @Autowired
-    private CategoryService mOwnerService;
+    private OwnerService mOwnerService;
 
     @GetMapping("/allships")
     public ResponseEntity<List<Ship>> getAllShips() {
@@ -40,7 +42,7 @@ public class ApiController {
 
     @PostMapping("/updateShip/{id}")
     public ResponseEntity<Ship> updateShip(@PathVariable(value = "id") int shipid,
-                                           @Valid @RequestBody Ship ship) {
+                                           @Valid @RequestBody Ship ship) throws ResourceNotFound {
         Ship foundedShip = mShipService.getObjBy(shipid);
         foundedShip.setShipName(ship.getShipName());
         foundedShip.setOwnerList(ship.getOwnerList());
@@ -50,19 +52,19 @@ public class ApiController {
     }
 
     @DeleteMapping("deleteShip/{id}")
-    public HttpStatus deleteShip(@PathVariable("id") int id) {
+    public HttpStatus deleteShip(@PathVariable("id") int id) throws ResourceNotFound {
         mShipService.delete(id);
         return HttpStatus.OK;
     }
 
     @GetMapping("/getShipDetails/{id}")
-    public ResponseEntity<Category> getAllShipDetails(@PathVariable("id") int id) {
+    public ResponseEntity<Category> getAllShipDetails(@PathVariable("id") int id) throws ResourceNotFound {
         Category category = (Category) mCategService.getObjBy(id);
         return new ResponseEntity<Category>(category, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteOwner/{id}")
-    public HttpStatus deleteOwner(@PathVariable("id") int id) {
+    public HttpStatus deleteOwner(@PathVariable("id") int id) throws ResourceNotFound {
         mOwnerService.delete(id);
         return HttpStatus.OK;
     }

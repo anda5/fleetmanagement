@@ -1,5 +1,7 @@
 package fleet.fleet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -57,7 +59,7 @@ public class Ship {
     public void setLmoNumber(long mLmoNumber) {
         this.mLmoNumber = mLmoNumber;
     }
-
+    
     public Set<Owner> getOwnerList() {
         return mOwnerList;
     }

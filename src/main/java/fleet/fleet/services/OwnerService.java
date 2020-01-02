@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.models.Owner;
 import fleet.fleet.repository.OwnerRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OwnerService extends CRUDService{
+public class OwnerService extends CRUDService {
 
     @Autowired
     OwnerRepository mOwnerRepo;
@@ -20,30 +21,30 @@ public class OwnerService extends CRUDService{
     @Override
     public Owner create(Object obj) {
         Owner owner = (Owner) obj;
-        if (obj != null) {
-           return mOwnerRepo.save(owner);
-        }
-        return null;
+        return mOwnerRepo.save(owner);
     }
 
     @Override
-    public Owner update(Object object) {
+    public Owner update(Object object) throws ResourceNotFound {
         Owner owner = (Owner) object;
         Optional<Owner> optionalOwner = mOwnerRepo.findById(owner.getOwnerId());
         if (optionalOwner.isPresent()) {
             Owner extentOwner = optionalOwner.get();
             extentOwner.setOwnerName(owner.getOwnerName());
             extentOwner.setListShip(owner.getListShip());
-           return mOwnerRepo.save(extentOwner);
+            return mOwnerRepo.save(extentOwner);
+        } else {
+            throw new ResourceNotFound("Owner not found for this id : " + owner.getOwnerId());
         }
-      return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws ResourceNotFound {
         Optional<Owner> ownerOptional = mOwnerRepo.findById(id);
         if (ownerOptional.isPresent()) {
             mOwnerRepo.delete(ownerOptional.get());
+        } else {
+            throw new ResourceNotFound("Owner not found for this id : " + id);
         }
     }
 
@@ -55,11 +56,12 @@ public class OwnerService extends CRUDService{
     }
 
     @Override
-    public Owner getObjBy(int id) {
+    public Owner getObjBy(int id) throws ResourceNotFound {
         Optional<Owner> ownerOptional = mOwnerRepo.findById(id);
         if (ownerOptional.isPresent()) {
             return ownerOptional.get();
+        } else {
+            throw new ResourceNotFound("Owner not found for this id : " + id);
         }
-        return null;
     }
 }

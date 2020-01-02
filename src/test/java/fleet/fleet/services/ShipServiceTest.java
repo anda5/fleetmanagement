@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Owner;
 import fleet.fleet.models.Ship;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class ShipServiceTest {
     private ShipService mShipService;
 
     @Test
-    void create() {
+    void create() throws ResourceNotFound {
         Ship ship = new Ship();
         ship.setShipName("Eco Arctic");
         ship.setLmoNumber(12121);
@@ -27,7 +28,7 @@ class ShipServiceTest {
     }
 
     @Test
-    void update() {
+    void update() throws ResourceNotFound {
         Ship ship = new Ship();
         ship.setShipName("Eco Arctic");
         ship.setLmoNumber(12121);
@@ -43,7 +44,7 @@ class ShipServiceTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws ResourceNotFound {
         Ship ship = new Ship();
         ship.setShipName("Eco Arctic");
         ship.setLmoNumber(12121);
@@ -66,7 +67,7 @@ class ShipServiceTest {
     }
 
     @Test
-    void getObjBy() {
+    void getObjBy() throws ResourceNotFound {
         Ship ship = new Ship();
         ship.setShipName("Eco Arctic");
         ship.setLmoNumber(12121);

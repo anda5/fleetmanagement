@@ -1,5 +1,7 @@
 package fleet.fleet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class Owner {
         this.mOwnerName = mOwnerName;
     }
 
+    @JsonIgnore
     public List<Ship> getListShip() { return mListShip; }
 
     public void setListShip(List<Ship> mListShip) {this.mListShip = mListShip;}

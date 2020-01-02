@@ -1,5 +1,6 @@
 package fleet.fleet.services;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.models.Ship;
 import fleet.fleet.repository.ShipRepository;
@@ -20,14 +21,11 @@ public class ShipService extends CRUDService {
     @Override
     public Ship create(Object obj) {
         Ship ship = (Ship) obj;
-        if (obj != null) {
-          return mShipRepository.save(ship);
-        }
-        return null;
+        return mShipRepository.save(ship);
     }
 
     @Override
-    public Ship update(Object object) {
+    public Ship update(Object object) throws ResourceNotFound {
         Ship ship = (Ship) object;
         Optional<Ship> optionalShip = mShipRepository.findById(ship.getShipId());
         if (optionalShip.isPresent()) {
@@ -36,16 +34,19 @@ public class ShipService extends CRUDService {
             existentShip.setLmoNumber(ship.getLmoNumber());
             existentShip.setOwnerList(ship.getOwnerList());
 
-           return mShipRepository.save(existentShip);
+            return mShipRepository.save(existentShip);
+        } else {
+            throw new ResourceNotFound("Ship not found for this id : " + ship.getShipId());
         }
-      return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws ResourceNotFound {
         Optional<Ship> ship = mShipRepository.findById(id);
         if (ship.isPresent()) {
             mShipRepository.delete(ship.get());
+        } else {
+            throw new ResourceNotFound("Ship not found for this id : " + id);
         }
     }
 
@@ -57,11 +58,12 @@ public class ShipService extends CRUDService {
     }
 
     @Override
-    public Ship getObjBy(int id) {
+    public Ship getObjBy(int id) throws ResourceNotFound {
         Optional<Ship> ship = mShipRepository.findById(id);
         if (ship.isPresent()) {
             return ship.get();
+        } else {
+            throw new ResourceNotFound("Ship not found for this id :: " + id);
         }
-        return null;
     }
 }

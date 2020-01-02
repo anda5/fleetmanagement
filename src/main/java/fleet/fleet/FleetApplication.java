@@ -26,41 +26,8 @@ public class FleetApplication implements CommandLineRunner {
         SpringApplication.run(FleetApplication.class, args);
     }
 
-    @Autowired
-    OwnerService repository;
     @Override
     public void run(String...args) throws Exception {
 
-
-
-        // Create an employee
-        Owner employee = new Owner();
-        employee.setOwnerName("Anda");
-
-        // Create project1
-        Ship project = new Ship();
-        project.setShipName("Employee Management System");
-
-        Ship project1 = new Ship();
-        project.setShipName("Employee Management System");
-
-        Ship projec = new Ship();
-        projec.setShipName("pl");
-
-        List<Ship> shipList =employee.getListShip();
-        shipList.add(project);
-        shipList.add(project1);
-        shipList.add(projec);
-        employee.setListShip(shipList);
-
-        project.getOwnerList().add(employee);
-        project1.getOwnerList().add(employee);
-
-
-
-
-        repository.create(employee);
-
-        repository.delete(1);
     }
 }
