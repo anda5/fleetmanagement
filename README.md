@@ -19,6 +19,6 @@ No. Description
 
 Technologies:  
 PostgreSQL database 
-JPA and Hibernate
-Spring framework for dependency-injection
-Gradle
+,JPA and Hibernate
+,Spring framework for dependency-injection
+,Gradle
