@@ -9,7 +9,7 @@ class ShipTest {
     void testShipId() {
         Ship ship = new Ship();
         ship.setShipId(2);
-        Assert.isTrue(ship.getShipId()==2, "getShipId method is not working");
+        Assert.isTrue(ship.getShipId() == 2, "getShipId method is not working");
     }
 
     @Test

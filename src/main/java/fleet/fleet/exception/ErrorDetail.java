@@ -1,7 +1,9 @@
 package fleet.fleet.exception;
 
 import java.util.Date;
-
+/**
+ * Object created for keep time, message and details about new exception
+ **/
 public class ErrorDetail {
     private Date mTime;
     private String mMessage;
@@ -25,5 +27,4 @@ public class ErrorDetail {
     public String getDetails() {
         return mDetails;
     }
-
 }

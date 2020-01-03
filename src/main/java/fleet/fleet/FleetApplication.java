@@ -20,14 +20,9 @@ import java.util.List;
 @SpringBootApplication
 @ComponentScan(basePackageClasses = ApiController.class)
 @ComponentScan(value = "fleet.fleet")
-public class FleetApplication implements CommandLineRunner {
+public class FleetApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(FleetApplication.class, args);
-    }
-
-    @Override
-    public void run(String...args) throws Exception {
-
     }
 }

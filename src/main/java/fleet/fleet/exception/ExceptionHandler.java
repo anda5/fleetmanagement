@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
-
+/**
+ * Handler used for show exception in body response of request
+ **/
 @ControllerAdvice
 public class ExceptionHandler {
 

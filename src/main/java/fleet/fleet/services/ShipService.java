@@ -1,12 +1,11 @@
 package fleet.fleet.services;
 
+import fleet.fleet.Utils;
 import fleet.fleet.exception.ResourceNotFound;
-import fleet.fleet.models.Category;
 import fleet.fleet.models.Ship;
 import fleet.fleet.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ShipService extends CRUDService {
 
             return mShipRepository.save(existentShip);
         } else {
-            throw new ResourceNotFound("Ship not found for this id : " + ship.getShipId());
+            throw new ResourceNotFound(Utils.SHIP_NOT_FOUND_EX + ship.getShipId());
         }
     }
 
@@ -46,7 +45,7 @@ public class ShipService extends CRUDService {
         if (ship.isPresent()) {
             mShipRepository.delete(ship.get());
         } else {
-            throw new ResourceNotFound("Ship not found for this id : " + id);
+            throw new ResourceNotFound(Utils.SHIP_NOT_FOUND_EX + id);
         }
     }
 
@@ -63,7 +62,7 @@ public class ShipService extends CRUDService {
         if (ship.isPresent()) {
             return ship.get();
         } else {
-            throw new ResourceNotFound("Ship not found for this id :: " + id);
+            throw new ResourceNotFound(Utils.SHIP_NOT_FOUND_EX + id);
         }
     }
 }

@@ -36,7 +36,7 @@ class CategoryServiceTest {
         category.setmShipTonnage(208081);
         mCategoryService.create(category);
 
-        Category updateCategory =  mCategoryService.getObjBy(category.getmCategoryId());
+        Category updateCategory = mCategoryService.getObjBy(category.getmCategoryId());
         updateCategory.setmShipType("Crude Oil Tanker");
         mCategoryService.update(updateCategory);
 
