@@ -1,11 +1,11 @@
 package fleet.fleet.services;
 
+import fleet.fleet.Utils;
 import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ public class CategoryService extends CRUDService {
 
     @Autowired
     private CategoryRepository mCategRepository;
-
 
     @Override
     public Category create(Object obj) {
@@ -36,7 +35,7 @@ public class CategoryService extends CRUDService {
 
             return mCategRepository.save(existentCategory);
         } else {
-            throw new ResourceNotFound("Category not found for this id : " + category.getmCategoryId());
+            throw new ResourceNotFound(Utils.CATEGORY_NOT_FOUND_EX + category.getmCategoryId());
         }
     }
 
@@ -46,7 +45,7 @@ public class CategoryService extends CRUDService {
         if (category.isPresent()) {
             mCategRepository.delete(category.get());
         } else {
-            throw new ResourceNotFound("Categroy not found for this id :" + id);
+            throw new ResourceNotFound(Utils.CATEGORY_NOT_FOUND_EX + id);
         }
     }
 
@@ -63,7 +62,7 @@ public class CategoryService extends CRUDService {
         if (category.isPresent()) {
             return category.get();
         } else {
-            throw new ResourceNotFound("Category not found for this id : " + id);
+            throw new ResourceNotFound(Utils.CATEGORY_NOT_FOUND_EX + id);
         }
     }
 }

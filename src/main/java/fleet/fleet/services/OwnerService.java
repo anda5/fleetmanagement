@@ -1,12 +1,11 @@
 package fleet.fleet.services;
 
+import fleet.fleet.Utils;
 import fleet.fleet.exception.ResourceNotFound;
-import fleet.fleet.models.Category;
 import fleet.fleet.models.Owner;
 import fleet.fleet.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class OwnerService extends CRUDService {
             extentOwner.setListShip(owner.getListShip());
             return mOwnerRepo.save(extentOwner);
         } else {
-            throw new ResourceNotFound("Owner not found for this id : " + owner.getOwnerId());
+            throw new ResourceNotFound(Utils.OWNER_NOT_FOUND_EX + owner.getOwnerId());
         }
     }
 
@@ -44,7 +43,7 @@ public class OwnerService extends CRUDService {
         if (ownerOptional.isPresent()) {
             mOwnerRepo.delete(ownerOptional.get());
         } else {
-            throw new ResourceNotFound("Owner not found for this id : " + id);
+            throw new ResourceNotFound(Utils.OWNER_NOT_FOUND_EX + id);
         }
     }
 
@@ -61,7 +60,7 @@ public class OwnerService extends CRUDService {
         if (ownerOptional.isPresent()) {
             return ownerOptional.get();
         } else {
-            throw new ResourceNotFound("Owner not found for this id : " + id);
+            throw new ResourceNotFound(Utils.OWNER_NOT_FOUND_EX + id);
         }
     }
 }

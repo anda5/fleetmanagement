@@ -7,23 +7,13 @@ import fleet.fleet.services.CategoryService;
 import fleet.fleet.services.OwnerService;
 import fleet.fleet.services.ShipService;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.io.UnsupportedEncodingException;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest(classes = FleetApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,6 +24,12 @@ class FleetApplicationTests {
 
     @LocalServerPort
     private int port;
+    @Autowired
+    private ShipService mShipService;
+    @Autowired
+    private OwnerService mOwnerService;
+    @Autowired
+    private CategoryService mCategoryService;
 
     private String getRootUrl() {
         return "http://localhost:" + port;
@@ -41,15 +37,7 @@ class FleetApplicationTests {
 
     @Test
     public void contextLoads() {
-
     }
-
-    @Autowired
-    private ShipService mShipService;
-    @Autowired
-    private OwnerService mOwnerService;
-    @Autowired
-    private CategoryService mCategoryService;
 
     @Test
     public void testGetAllShips() {
@@ -58,25 +46,28 @@ class FleetApplicationTests {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/allships",
                 HttpMethod.GET, entity, String.class);
-        System.out.println("RESPONSE:"+response.toString());
+        System.out.println("RESPONSE:" + response.toString());
         assertTrue(response.getStatusCode().equals(HttpStatus.OK));
     }
+
     @Test
     public void testAddShip() {
         Ship ship = new Ship();
         ship.setShipName("Symphony 5");
-        ship.setLmoNumber(55555);
+        ship.setLmoNumber(555);
 
-        ResponseEntity<Ship> postResponse = restTemplate.postForEntity(getRootUrl() + "api/v1/addShip", ship, Ship.class);
-        System.out.println("RESPONSE:"+postResponse.toString());
+        ResponseEntity<Ship> postResponse = restTemplate.postForEntity(getRootUrl() + "api/v1/addShip",
+                ship, Ship.class);
+        System.out.println("RESPONSE:" + postResponse.toString());
         assertNotNull(postResponse);
         assertTrue(postResponse.getStatusCode().equals(HttpStatus.OK));
     }
+
     @Test
     public void testDeleteShip() {
         Ship ship = new Ship();
-        ship.setShipName("Ship");
-        ship.setLmoNumber(313113);
+        ship.setShipName("Eco Arctic");
+        ship.setLmoNumber(4567890);
         mShipService.create(ship);
 
         int id = ship.getShipId();
@@ -84,6 +75,7 @@ class FleetApplicationTests {
         Ship ship1 = restTemplate.getForObject(getRootUrl() + "api/v1/deleteShip/" + id, Ship.class);
         assertNull(ship1.getShipName());
     }
+
     @Test
     public void testUpdateShip() {
         Ship ship = new Ship();
@@ -94,21 +86,24 @@ class FleetApplicationTests {
         Ship updatedShip = new Ship();
         updatedShip.setShipName("Ship 2020");
 
-        ResponseEntity<Ship> postResponse = restTemplate.postForEntity(getRootUrl() + "api/v1/updateShip/" +ship.getShipId(), updatedShip, Ship.class);
-        System.out.println("RESPONSE:"+postResponse.toString());
+        ResponseEntity<Ship> postResponse = restTemplate.postForEntity(getRootUrl() + "api/v1/updateShip/" +
+                ship.getShipId(), updatedShip, Ship.class);
+        System.out.println("RESPONSE:" + postResponse.toString());
         assertNotNull(postResponse);
         assertTrue(postResponse.getStatusCode().equals(HttpStatus.OK));
     }
+
     @Test
     public void testGetAllShipDetails() {
         int id = insertShipWithDetails().getmCategoryId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/getShipDetails/"+ id,
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/getShipDetails/" + id,
                 HttpMethod.GET, entity, String.class);
-        System.out.println("RESPONSE:"+response.toString());
+        System.out.println("RESPONSE:" + response.toString());
         assertTrue(response.getStatusCode().equals(HttpStatus.OK));
     }
+
     @Test
     public void testDeleteOwner() {
         int id = insertSeveralShipsForOwner().getOwnerId();
@@ -121,24 +116,23 @@ class FleetApplicationTests {
     void testResourceNotFound() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/getShipDetails/"+ 45678,
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/getShipDetails/" + 45678,
                 HttpMethod.GET, entity, String.class);
-        System.out.println("RESPONSE:"+response.toString());
+        System.out.println("RESPONSE:" + response.toString());
         assertFalse(response.getStatusCode().equals(HttpStatus.OK));
     }
 
-    private Owner insertSeveralShipsForOwner(){
+    private Owner insertSeveralShipsForOwner() {
         Owner owner = new Owner();
-        owner.setOwnerName("A");
+        owner.setOwnerName("Anda");
 
         Ship ship = new Ship();
-        ship.setShipName("Ship1");
+        ship.setShipName("Eco Arctic");
         ship.setLmoNumber(2121);
 
         Ship shipSec = new Ship();
-        shipSec.setShipName("Ship2");
+        shipSec.setShipName("Arctic");
         shipSec.setLmoNumber(222);
-
 
         ship.getOwnerList().add(owner);
         shipSec.getOwnerList().add(owner);
@@ -149,23 +143,23 @@ class FleetApplicationTests {
         mShipService.create(ship);
         mShipService.create(shipSec);
         mOwnerService.create(owner);
-       return owner;
+        return owner;
 
     }
 
-    private Category insertShipWithDetails(){
+    private Category insertShipWithDetails() {
         Owner owner = new Owner();
-        owner.setOwnerName("A");
+        owner.setOwnerName("Anda");
 
         Ship ship = new Ship();
-        ship.setShipName("Ship1");
-        ship.setLmoNumber(2121);
+        ship.setShipName("Explorer Spirit");
+        ship.setLmoNumber(212187);
 
         ship.getOwnerList().add(owner);
         owner.getListShip().add(ship);
 
         Category category = new Category();
-        category.setmShipType("categ1");
+        category.setmShipType("Cruise");
         category.setShip(ship);
         category.setmShipTonnage(100);
 
@@ -176,8 +170,7 @@ class FleetApplicationTests {
         return category;
     }
 
-    private void addShipsInDb(){
-
+    private void addShipsInDb() {
         Ship ship = new Ship();
         ship.setShipName("Eco Arctic");
         ship.setLmoNumber(12121);
@@ -188,9 +181,4 @@ class FleetApplicationTests {
         secShip.setLmoNumber(313113);
         mShipService.create(secShip);
     }
-
-
-
-
-
 }

@@ -34,7 +34,7 @@ class ShipServiceTest {
         ship.setLmoNumber(12121);
         mShipService.create(ship);
 
-        Ship updateShip =  mShipService.getObjBy(ship.getShipId());
+        Ship updateShip = mShipService.getObjBy(ship.getShipId());
         updateShip.setShipName("Explorer Spirit");
         mShipService.update(updateShip);
 

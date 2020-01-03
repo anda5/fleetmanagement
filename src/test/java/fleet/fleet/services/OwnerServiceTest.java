@@ -33,7 +33,7 @@ class OwnerServiceTest {
         owner.setOwnerName("Anda");
         mOwnerService.create(owner);
 
-        Owner updatedOwner =  mOwnerService.getObjBy(owner.getOwnerId());
+        Owner updatedOwner = mOwnerService.getObjBy(owner.getOwnerId());
         updatedOwner.setOwnerName("Maria");
 
         mOwnerService.update(updatedOwner);
