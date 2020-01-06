@@ -34,27 +34,27 @@ public class Category {
         mShipTonnage = shipTonnage;
     }
 
-    public int getmCategoryId() {
+    public int getCategoryId() {
         return mCategoryId;
     }
 
-    public void setmCategoryId(int mCategoryId) {
+    public void setCategoryId(int mCategoryId) {
         this.mCategoryId = mCategoryId;
     }
 
-    public String getmShipType() {
+    public String getShipType() {
         return mShipType;
     }
 
-    public void setmShipType(String mShipType) {
+    public void setShipType(String mShipType) {
         this.mShipType = mShipType;
     }
 
-    public long getmShipTonnage() {
+    public long getShipTonnage() {
         return mShipTonnage;
     }
 
-    public void setmShipTonnage(long mShipTonnage) {
+    public void setShipTonnage(long mShipTonnage) {
         this.mShipTonnage = mShipTonnage;
     }
 
@@ -66,6 +66,7 @@ public class Category {
         this.mShip = mShip;
     }
 
+    @Override
     public String toString() {
         return Utils.CATEGORY_OBJ + Utils.LINE_SYMBOL + mCategoryId +
                 Utils.COMMMA_SYMBOL + mShipType + Utils.COMMMA_SYMBOL + mShipTonnage;

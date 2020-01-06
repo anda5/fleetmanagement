@@ -26,16 +26,16 @@ public class CategoryService extends CRUDService {
     @Override
     public Category update(Object object) throws ResourceNotFound {
         Category category = (Category) object;
-        Optional<Category> optionalCategory = mCategRepository.findById(category.getmCategoryId());
+        Optional<Category> optionalCategory = mCategRepository.findById(category.getCategoryId());
         if (optionalCategory.isPresent()) {
             Category existentCategory = optionalCategory.get();
-            existentCategory.setmShipTonnage(category.getmShipTonnage());
-            existentCategory.setmShipType(category.getmShipType());
+            existentCategory.setShipTonnage(category.getShipTonnage());
+            existentCategory.setShipType(category.getShipType());
             existentCategory.setShip(category.getShip());
 
             return mCategRepository.save(existentCategory);
         } else {
-            throw new ResourceNotFound(Utils.CATEGORY_NOT_FOUND_EX + category.getmCategoryId());
+            throw new ResourceNotFound(Utils.CATEGORY_NOT_FOUND_EX + category.getCategoryId());
         }
     }
 

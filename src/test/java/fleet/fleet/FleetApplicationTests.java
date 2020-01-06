@@ -1,5 +1,6 @@
 package fleet.fleet;
 
+import fleet.fleet.exception.ResourceNotFound;
 import fleet.fleet.models.Category;
 import fleet.fleet.models.Owner;
 import fleet.fleet.models.Ship;
@@ -65,12 +66,7 @@ class FleetApplicationTests {
 
     @Test
     public void testDeleteShip() {
-        Ship ship = new Ship();
-        ship.setShipName("Eco Arctic");
-        ship.setLmoNumber(4567890);
-        mShipService.create(ship);
-
-        int id = ship.getShipId();
+        int id = insertSeveralOwnersAndShips().getShipId();
         restTemplate.delete(getRootUrl() + "api/v1/deleteShip/" + id);
         Ship ship1 = restTemplate.getForObject(getRootUrl() + "api/v1/deleteShip/" + id, Ship.class);
         assertNull(ship1.getShipName());
@@ -94,7 +90,7 @@ class FleetApplicationTests {
     }
 
     @Test
-    public void testGetAllShipDetails() {
+    public void testGetAllShipDetails() throws ResourceNotFound {
         int id = insertShipWithDetails().getmCategoryId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
@@ -147,6 +143,45 @@ class FleetApplicationTests {
 
     }
 
+
+    private Ship insertSeveralOwnersAndShips() {
+        Owner owner = new Owner();
+        owner.setOwnerName("Anda");
+
+        Owner ownerSec = new Owner();
+        ownerSec.setOwnerName("Tom");
+
+        Owner ownerTh = new Owner();
+        ownerTh.setOwnerName("Jimi");
+
+        Ship ship = new Ship();
+        ship.setShipName("Eco Arctic");
+        ship.setLmoNumber(2121);
+
+        Ship shipSec = new Ship();
+        shipSec.setShipName("Arctic");
+        shipSec.setLmoNumber(222);
+
+        Category category = new Category();
+        category.setmShipType("Cruise");
+        category.setShip(ship);
+        category.setmShipTonnage(100);
+
+        ship.getOwnerList().add(owner);
+        shipSec.getOwnerList().add(owner);
+
+        owner.getListShip().add(ship);
+        owner.getListShip().add(shipSec);
+
+        mShipService.create(ship);
+        mShipService.create(shipSec);
+        mOwnerService.create(owner);
+        mOwnerService.create(ownerSec);
+        mOwnerService.create(ownerTh);
+        mCategoryService.create(category);
+        return ship;
+
+    }
     private Category insertShipWithDetails() {
         Owner owner = new Owner();
         owner.setOwnerName("Anda");

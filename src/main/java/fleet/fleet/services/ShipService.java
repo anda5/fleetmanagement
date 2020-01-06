@@ -2,6 +2,8 @@ package fleet.fleet.services;
 
 import fleet.fleet.Utils;
 import fleet.fleet.exception.ResourceNotFound;
+import fleet.fleet.models.Category;
+import fleet.fleet.models.Owner;
 import fleet.fleet.models.Ship;
 import fleet.fleet.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,12 @@ public class ShipService extends CRUDService {
 
     @Autowired
     private ShipRepository mShipRepository;
+
+    @Autowired
+    private OwnerService mOwnerService;
+
+    @Autowired
+    private CategoryService mCategoryService;
 
     @Override
     public Ship create(Object obj) {
@@ -41,9 +49,24 @@ public class ShipService extends CRUDService {
 
     @Override
     public void delete(int id) throws ResourceNotFound {
-        Optional<Ship> ship = mShipRepository.findById(id);
-        if (ship.isPresent()) {
-            mShipRepository.delete(ship.get());
+        Optional<Ship> shipOptional = mShipRepository.findById(id);
+        if (shipOptional.isPresent()) {
+            Ship ship = shipOptional.get();
+            List<Owner> ownerList = new ArrayList<>();
+            ownerList.addAll(ship.getOwnerList());
+            for (Owner owner: ownerList){
+                ship.getOwnerList().remove(owner);
+                owner.getListShip().remove(ship);
+                mOwnerService.update(owner);
+                update(ship);
+            }
+            for (Object object : mCategoryService.getAll()) {
+               Category category = (Category) object;
+                if (category.getShip().equals(ship)) {
+                    mCategoryService.delete(category.getCategoryId());
+                }
+            }
+            mShipRepository.delete(ship);
         } else {
             throw new ResourceNotFound(Utils.SHIP_NOT_FOUND_EX + id);
         }

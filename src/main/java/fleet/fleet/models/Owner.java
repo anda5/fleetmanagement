@@ -2,10 +2,14 @@ package fleet.fleet.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fleet.fleet.Utils;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 /**
  * Owner class is mapped the owner table from db. Class contains all columns as fields: owner id,
@@ -22,7 +26,11 @@ public class Owner {
     private int mOwnerId;
     @Column
     private String mOwnerName;
-    @ManyToMany(mappedBy = Utils.OWNER_LIST, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },mappedBy = Utils.OWNER_LIST)
     private List<Ship> mListShip = new ArrayList<>();
 
     public Owner() {
@@ -57,6 +65,7 @@ public class Owner {
         this.mListShip = mListShip;
     }
 
+    @Override
     public String toString() {
         return Utils.OWNER_OBJ + Utils.LINE_SYMBOL + mOwnerId + Utils.COMMMA_SYMBOL + mOwnerName;
     }

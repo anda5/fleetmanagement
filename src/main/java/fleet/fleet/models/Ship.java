@@ -26,11 +26,14 @@ public class Ship {
     private String mShipName;
     @Column
     private long mLmoNumber;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,
+    cascade = {
+        CascadeType.PERSIST,
+                CascadeType.MERGE
+    })
     @JoinTable(name = Utils.JOINED_TABLE,
-            joinColumns = {@JoinColumn(name = Utils.SHIP_ID, updatable = true, insertable = true)},
-            inverseJoinColumns = {@JoinColumn(name = Utils.OWNER_ID, updatable = true, insertable = true)})
+            joinColumns = {@JoinColumn(name = Utils.SHIP_ID,updatable = true) },
+            inverseJoinColumns = {@JoinColumn(name = Utils.OWNER_ID, updatable = true)})
     private Set<Owner> mOwnerList = new HashSet<>();
 
     public Ship() {
@@ -73,6 +76,7 @@ public class Ship {
         this.mOwnerList = mOwnerList;
     }
 
+    @Override
     public String toString() {
         return Utils.SHIP_OBJ + Utils.LINE_SYMBOL + mShipId +
                 Utils.COMMMA_SYMBOL + mShipName + Utils.COMMMA_SYMBOL + mLmoNumber;
