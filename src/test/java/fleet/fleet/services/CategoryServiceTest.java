@@ -20,28 +20,28 @@ class CategoryServiceTest {
     void create() throws ResourceNotFound {
 
         Category category = new Category();
-        category.setmShipType("Cruise");
-        category.setmShipTonnage(208081);
+        category.setShipType("Cruise");
+        category.setShipTonnage(208081);
 
         mCategoryService.create(category);
         Assert.isTrue(mCategoryService.getObjBy(
-                category.getmCategoryId()).getmShipType().equals(category.getmShipType()),
+                category.getCategoryId()).getShipType().equals(category.getShipType()),
                 "Object is not created");
     }
 
     @Test
     void update() throws ResourceNotFound {
         Category category = new Category();
-        category.setmShipType("Cruise");
-        category.setmShipTonnage(208081);
+        category.setShipType("Cruise");
+        category.setShipTonnage(208081);
         mCategoryService.create(category);
 
-        Category updateCategory = mCategoryService.getObjBy(category.getmCategoryId());
-        updateCategory.setmShipType("Crude Oil Tanker");
+        Category updateCategory = mCategoryService.getObjBy(category.getCategoryId());
+        updateCategory.setShipType("Crude Oil Tanker");
         mCategoryService.update(updateCategory);
 
         Assert.isTrue(mCategoryService.getObjBy(
-                updateCategory.getmCategoryId()).getmShipType().equals("Crude Oil Tanker"),
+                updateCategory.getCategoryId()).getShipType().equals("Crude Oil Tanker"),
                 "Object is not updated");
     }
 
@@ -49,11 +49,11 @@ class CategoryServiceTest {
     void delete() throws ResourceNotFound {
 
         Category category = new Category();
-        category.setmShipType("Cruise");
-        category.setmShipTonnage(208081);
+        category.setShipType("Cruise");
+        category.setShipTonnage(208081);
         mCategoryService.create(category);
 
-        mCategoryService.delete(category.getmCategoryId());
+        mCategoryService.delete(category.getCategoryId());
         Assert.isTrue(!mCategoryService.getAll().contains(category),
                 "Object is not deleted");
     }
@@ -62,8 +62,8 @@ class CategoryServiceTest {
     void getAll() {
 
         Category category = new Category();
-        category.setmShipType("Cruise");
-        category.setmShipTonnage(208081);
+        category.setShipType("Cruise");
+        category.setShipTonnage(208081);
         mCategoryService.create(category);
         mCategoryService.create(category);
         Assert.notEmpty(mCategoryService.getAll(),
@@ -74,10 +74,10 @@ class CategoryServiceTest {
     void getObjBy() throws ResourceNotFound {
 
         Category category = new Category();
-        category.setmShipType("Cruise");
-        category.setmShipTonnage(208081);
+        category.setShipType("Cruise");
+        category.setShipTonnage(208081);
         mCategoryService.create(category);
-        Assert.notNull(mCategoryService.getObjBy(category.getmCategoryId()),
+        Assert.notNull(mCategoryService.getObjBy(category.getCategoryId()),
                 " Object is not returned!");
     }
 }

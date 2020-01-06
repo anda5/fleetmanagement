@@ -8,8 +8,8 @@ class CategoryTest {
     @Test
     void testGettersAndSetters() {
         Category category = new Category("Curse", 212121);
-        Assert.isTrue(category.getmShipType().equals("Curse"), "getShipType does not work as expected");
-        Assert.isTrue(category.getmShipTonnage() == 212121, "getShipTonnage does not work as expected");
+        Assert.isTrue(category.getShipType().equals("Curse"), "getShipType does not work as expected");
+        Assert.isTrue(category.getShipTonnage() == 212121, "getShipTonnage does not work as expected");
     }
 
     @Test

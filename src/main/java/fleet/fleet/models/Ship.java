@@ -26,7 +26,7 @@ public class Ship {
     private String mShipName;
     @Column
     private long mLmoNumber;
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
     cascade = {
         CascadeType.PERSIST,
                 CascadeType.MERGE

@@ -91,7 +91,7 @@ class FleetApplicationTests {
 
     @Test
     public void testGetAllShipDetails() throws ResourceNotFound {
-        int id = insertShipWithDetails().getmCategoryId();
+        int id = insertShipWithDetails().getCategoryId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "api/v1/getShipDetails/" + id,
@@ -163,9 +163,9 @@ class FleetApplicationTests {
         shipSec.setLmoNumber(222);
 
         Category category = new Category();
-        category.setmShipType("Cruise");
+        category.setShipType("Cruise");
         category.setShip(ship);
-        category.setmShipTonnage(100);
+        category.setShipTonnage(100);
 
         ship.getOwnerList().add(owner);
         shipSec.getOwnerList().add(owner);
@@ -194,9 +194,9 @@ class FleetApplicationTests {
         owner.getListShip().add(ship);
 
         Category category = new Category();
-        category.setmShipType("Cruise");
+        category.setShipType("Cruise");
         category.setShip(ship);
-        category.setmShipTonnage(100);
+        category.setShipTonnage(100);
 
         mShipService.create(ship);
         mOwnerService.create(owner);

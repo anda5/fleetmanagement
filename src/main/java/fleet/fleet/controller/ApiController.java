@@ -97,7 +97,7 @@ public class ApiController {
     @GetMapping("/getShipDetails/{id}")
     public ResponseEntity<Category> getAllShipDetails(@PathVariable("id") int id) throws ResourceNotFound {
         Category category = (Category) mCategService.getObjBy(id);
-        mCategService.delete(category.getmCategoryId());
+        mCategService.delete(category.getCategoryId());
         return new ResponseEntity<Category>(category, new HttpHeaders(), HttpStatus.OK);
     }
 

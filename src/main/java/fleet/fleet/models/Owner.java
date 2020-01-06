@@ -26,7 +26,7 @@ public class Owner {
     private int mOwnerId;
     @Column
     private String mOwnerName;
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

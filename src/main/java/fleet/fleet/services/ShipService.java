@@ -62,7 +62,7 @@ public class ShipService extends CRUDService {
             }
             for (Object object : mCategoryService.getAll()) {
                Category category = (Category) object;
-                if (category.getShip().equals(ship)) {
+                if (category.getShip()!=null &&category.getShip().equals(ship)) {
                     mCategoryService.delete(category.getCategoryId());
                 }
             }
